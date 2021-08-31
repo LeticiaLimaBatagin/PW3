@@ -1,0 +1,28 @@
+<div class="input-group flex-nowrap">
+  <span class="input-group-text" id="addon-wrapping">Buscar</span>
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Busque aqui"
+    aria-label="Username"
+    aria-describedby="addon-wrapping"
+    [(ngModel)]="buscar"
+    (ngModelChange)="filtrarFilmes()">
+</div>
+
+
+<div class="row">
+  <div class="col-3 mb-3" *ngFor="let filme of listaDeFilmes.results">
+    <div class="card" style="width: 18rem;">
+      <img src="https://image.tmdb.org/t/p/w500/{{filme.poster_path}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{filme.title}}</h5>
+        <h5 class="card-title">{{filme.release_date | date: 'shortDate'}}</h5>
+        <p class="card-text">{{filme.overview | slice:0:100}}</p>
+        <a routerLink="/detalhes" class="card-link">Ver mais ... </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+

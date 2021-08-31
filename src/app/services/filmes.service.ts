@@ -20,4 +20,5 @@ export class FilmesService {
     const url = `${this.apiUrl}/search/movie?${this.language}&${this.region}&${this.key}&query=${buscar}`;
     return this.http.get<IListaFilmes>(url);
   }
+
 }

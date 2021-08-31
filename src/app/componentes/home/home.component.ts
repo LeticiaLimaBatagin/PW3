@@ -16,21 +16,17 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.buscarFilmes();
+    this.buscarFilmes(this.listarFilmeAleatorio());
 
   }
 
-  buscarFilmes(filtro = this.listarFilmeAleatorio()): void{
+  buscarFilmes(filtro: string): void{
     this.filmesService.buscarFilmes(filtro).subscribe(retorno =>{
       this.listaDeFilmes = retorno;
     });
   }
   filtrarFilmes(): void{
     this.buscarFilmes(this.buscar);
-  }
-
-  verFilmes():void{
-    console.log(this.listaDeFilmes);
   }
 
   listarFilmeAleatorio() {

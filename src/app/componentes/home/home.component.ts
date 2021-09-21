@@ -16,8 +16,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.buscarFilmes(this.listarFilmeAleatorio());
-
+    this.buscarFilmesPopulares();
   }
 
   buscarFilmes(filtro: string): void{
@@ -25,13 +24,23 @@ export class HomeComponent implements OnInit {
       this.listaDeFilmes = retorno;
     });
   }
-  filtrarFilmes(): void{
-    this.buscarFilmes(this.buscar);
+
+  buscarFilmesPopulares(): void{
+    this.filmesService.listarPopulares().subscribe(result => {
+      this.listaDeFilmes = result;
+    });
   }
 
-  listarFilmeAleatorio() {
+  filtrarFilmes(): void{
+    if(this.buscar.length > 0)
+      this.buscarFilmes(this.buscar);
+    else
+      this.buscarFilmesPopulares();
+  }
+
+  listarFilmeAleatorio(): void {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const charactersLength = characters.length;
-    return characters.charAt(Math.floor(Math.random() * charactersLength));
+    this.buscarFilmes(characters.charAt(Math.floor(Math.random() * charactersLength)));
  }
 }

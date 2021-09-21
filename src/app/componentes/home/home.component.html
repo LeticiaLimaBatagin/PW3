@@ -9,11 +9,21 @@
     [(ngModel)]="buscar"
     (ngModelChange)="filtrarFilmes()">
 </div>
-
+<button type="button" class="btn btn-primary" (click)="listarFilmeAleatorio()" >Aleatório</button>
 <div class="row">
   <div class="col-3 mb-3" *ngFor="let filme of listaDeFilmes.results">
-    <div class="card" style="width: 18rem;">
-      <img src="https://image.tmdb.org/t/p/w500/{{filme.poster_path}}" class="card-img-top" alt="...">
+    <div class="card">
+
+      <div *ngIf="filme.poster_path; then thenBlock else elseBlock"></div>
+      <ng-template #thenBlock>
+        <img src="https://image.tmdb.org/t/p/w500/{{filme.poster_path}}" class="card-img-top">
+      </ng-template>
+      <ng-template #elseBlock>
+        <img src="assets/img/notfound.png" class="card-img-top">
+      </ng-template>
+
+
+
       <div class="card-body">
         <h5 class="card-title">{{filme.title}}</h5>
         <h5 class="card-title">{{filme.release_date | date: 'shortDate'}}</h5>

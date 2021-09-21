@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient} from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, EMPTY } from 'rxjs';
 import { IListaFilmes } from '../models/IListaFilmes.model';
+import { ToastrService } from 'ngx-toastr';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +16,34 @@ export class FilmesService {
   private language = 'language=pt-BR';
   private region = 'region=BR';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private  toast: ToastrService
+  ) { }
 
   buscarFilmes(buscar: string): Observable<IListaFilmes>{
     const url = `${this.apiUrl}/search/movie?${this.language}&${this.region}&${this.key}&query=${buscar}`;
-    return this.http.get<IListaFilmes>(url);
+    return this.http.get<IListaFilmes>(url).pipe(
+      map(result => result),
+      catchError(erro => this.exibirErro(erro))
+    )
+  }
+
+  listarPopulares(): Observable<IListaFilmes>{
+    const url = 'https://api.themoviedb.org/3/movie/popular?api_key=034c5fdfe098d8cb374c2152cf44c2e7&language=pt-BR&page=1&region=BR';
+    return this.http.get<IListaFilmes>(url).pipe(
+      map(result => result),
+      catchError(erro => this.exibirErro(erro))
+    )
+  }
+
+  exibirErro(erro: any): Observable<any>{
+    this.exibirMensagens('Erro',`Erro de acesso a API: ${erro.message}`,'toast-error');
+    return EMPTY
+  }
+
+  exibirMensagens(titulo: string, mensagem: string, tipo: string): void{
+    this.toast.show(mensagem, titulo,{closeButton:true, progressBar: true, timeOut: 5000},tipo);
   }
 
 }

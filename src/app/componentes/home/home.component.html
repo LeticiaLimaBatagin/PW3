@@ -28,7 +28,7 @@
         <h5 class="card-title">{{filme.title}}</h5>
         <h5 class="card-title">{{filme.release_date | date: 'shortDate'}}</h5>
         <p class="card-text">{{filme.overview | slice:0:100}}</p>
-        <a routerLink="/detalhes" class="card-link">Ver mais ... </a>
+        <a routerLink="/filme/{{filme.id}}" class="card-link">Ver mais ... </a>
       </div>
     </div>
   </div>

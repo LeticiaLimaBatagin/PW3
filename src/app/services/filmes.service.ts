@@ -5,6 +5,7 @@ import { Observable, EMPTY } from 'rxjs';
 import { IListaFilmes } from '../models/IListaFilmes.model';
 import { ToastrService } from 'ngx-toastr';
 import { map, catchError } from 'rxjs/operators';
+import { IFilmeDetalhes } from '../models/IFilmeDetalhes.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,12 +30,20 @@ export class FilmesService {
     )
   }
 
-  listarPopulares(): Observable<IListaFilmes>{
+  public listarPopulares(): Observable<IListaFilmes>{
     const url = 'https://api.themoviedb.org/3/movie/popular?api_key=034c5fdfe098d8cb374c2152cf44c2e7&language=pt-BR&page=1&region=BR';
     return this.http.get<IListaFilmes>(url).pipe(
       map(result => result),
       catchError(erro => this.exibirErro(erro))
     )
+  }
+
+  public buscarPorId(id: number): Observable<IFilmeDetalhes>{
+    const url = `https://api.themoviedb.org/3/movie/${id}?api_key=034c5fdfe098d8cb374c2152cf44c2e7&language=pt-BR`;
+    return this.http.get<IFilmeDetalhes>(url).pipe(
+      map(retorno => retorno),
+      catchError(erro => this.exibirErro(erro))
+    );
   }
 
   exibirErro(erro: any): Observable<any>{

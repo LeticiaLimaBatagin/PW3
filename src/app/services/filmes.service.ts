@@ -1,3 +1,4 @@
+import { IFilme } from './../models/IFilme.model';
 import { Injectable } from '@angular/core';
 
 import { HttpClient} from '@angular/common/http';
@@ -43,6 +44,22 @@ export class FilmesService {
     return this.http.get<IFilmeDetalhes>(url).pipe(
       map(retorno => retorno),
       catchError(erro => this.exibirErro(erro))
+    );
+  }
+
+  public addFilmeAPlaylist(filme: IFilme): Observable<IFilme>{
+    const url = 'http://localhost:3000/playlist_filmes';
+    return this.http.post<IFilme>(url, filme).pipe(
+      map(retorno => retorno),
+      catchError(error=>this.exibirErro(error))
+    );
+  }
+
+  public buscarFilmeDaPlaylist(): Observable<IFilme[]>{
+    const url = 'http://localhost:3000/playlist_filmes';
+    return this.http.get<IFilme[]>(url).pipe(
+      map(retorno => retorno),
+      catchError(error=>this.exibirErro(error))
     );
   }
 

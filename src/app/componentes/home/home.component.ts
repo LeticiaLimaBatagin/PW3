@@ -1,6 +1,8 @@
+import { IFilme } from './../../models/IFilme.model';
 import { FilmesService } from './../../services/filmes.service';
 import { Component, OnInit } from '@angular/core';
 import { IListaFilmes } from 'src/app/models/IListaFilmes.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -12,11 +14,18 @@ export class HomeComponent implements OnInit {
   buscar: string = '';
   public listaDeFilmes: IListaFilmes = {};
 
-  constructor(private filmesService: FilmesService) {
+  constructor(
+    private filmesService: FilmesService,
+    private router: Router,) {
   }
 
   ngOnInit(): void {
-    this.buscarFilmesPopulares();
+    if(this.router.url !== '/playlist'){
+      this.buscarFilmesPopulares();
+    }
+    else{
+      this.buscarFilmeDaPlaylist();
+    }
   }
 
   buscarFilmes(filtro: string): void{
@@ -36,6 +45,22 @@ export class HomeComponent implements OnInit {
       this.buscarFilmes(this.buscar);
     else
       this.buscarFilmesPopulares();
+  }
+
+  addFilmeAPlayList(filme: IFilme): void{
+    this.filmesService.addFilmeAPlaylist(filme).subscribe(resposta => {
+      this.filmesService.exibirMensagens(
+        'Sua PlayList',
+        `${filme.title} foi adicionado a sua playlist}`,
+        'toast-success'
+      );
+    });
+  }
+
+  buscarFilmeDaPlaylist(): void{
+    this.filmesService.buscarFilmeDaPlaylist().subscribe(result => {
+      this.listaDeFilmes.results = result;
+    });
   }
 
   listarFilmeAleatorio(): void {

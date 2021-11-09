@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit {
 
   buscarFilmeDaPlaylist(): void{
     this.filmesService.buscarFilmeDaPlaylist().subscribe(result => {
-      this.listaDeFilmes.results = result;
+      this.listaDeFilmes.results = result.results;
     });
   }
 

@@ -51,10 +51,9 @@ export class FilmesService {
   public addFilmeAPlaylist(filme: IFilme): Observable<IFilmeApi>{
     const url = 'https://parseapi.back4app.com/classes/Filme';
     const configApi = {
-      'X-Parse-Application-Id':'sppUa0RnIdfZhrVFpC63cuF6WRLKIEQh3sGxwPFe',
-      'X-Parse-REST-API-Key':'J7RXIr1LnPs5vRz49BIqsXCF5l8h8qGeyhUFNMc5',
-      'Content-Type':'application/json'
-    }
+      'X-Parse-Application-Id': 'eGxKdXOIJyCUz6R6qyrcgl7XdQBEfX0IIMdWebtb',
+      'X-Parse-REST-API-Key': 'G17ENIE5KI2UWY3Xw5gCPd8QRrkNGISmDPX42ERL'
+    };
     const headers = new HttpHeaders(configApi);
 
     let filmeApi: IFilmeApi;
@@ -85,9 +84,9 @@ export class FilmesService {
   public buscarFilmeDaPlaylist(): Observable<IListaFilmeApi>{
     const url = 'https://parseapi.back4app.com/classes/Filme';
     const configApi = {
-      'X-Parse-Application-Id':'sppUa0RnIdfZhrVFpC63cuF6WRLKIEQh3sGxwPFe',
-      'X-Parse-REST-API-Key':'J7RXIr1LnPs5vRz49BIqsXCF5l8h8qGeyhUFNMc5'
-    }
+      'X-Parse-Application-Id': 'eGxKdXOIJyCUz6R6qyrcgl7XdQBEfX0IIMdWebtb',
+      'X-Parse-REST-API-Key': 'G17ENIE5KI2UWY3Xw5gCPd8QRrkNGISmDPX42ERL'
+    };
     const headers = new HttpHeaders(configApi);
 
     return this.http.get<IListaFilmeApi>(url,{headers}).pipe(
